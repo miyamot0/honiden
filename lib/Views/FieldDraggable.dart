@@ -43,6 +43,7 @@ class FieldDraggableState extends State<FieldDraggable> {
       left: offset.dx,
       child: Draggable(
         data: widget.content,
+        maxSimultaneousDrags: 1,
         child: Container(
           width: 200.0,
           height: 200.0,
@@ -70,6 +71,10 @@ class FieldDraggableState extends State<FieldDraggable> {
           setState(() {
             offset = o;
           });
+        },
+        onDragCompleted: () {
+          //widget.
+          //dispose();
         },
       ),
     );

@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 class FieldDropWidget extends StatefulWidget {
   final String entry;
-  final double left, top;
+  final bool isLeftPortion;
 
   const FieldDropWidget({
     Key key,
     @required this.entry,
-    @required this.left,
-    @required this.top,
+    @required this.isLeftPortion,
   }) : super(key: key);
 
   @override
@@ -16,21 +15,29 @@ class FieldDropWidget extends StatefulWidget {
 }
 
 class FieldDropWidgetState extends State<FieldDropWidget> {
+  static const double padding = 10.0;
+
   String collectedData;
-  Color currentColor = Colors.grey;
+  Color currentColor = Colors.transparent;
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQuery = MediaQuery.of(context);
+
     return Positioned(
-      top: widget.top,
-      left: widget.left,
+      bottom: padding,
+      left: widget.isLeftPortion ? padding : (mediaQuery.size.width / 2.0) + padding / 2.0,
       child: DragTarget(
         builder: (context, accepted, rejected) {
           return Container(
-            height: 200.0,
-            width: 200.0,
+            height: mediaQuery.size.height / 3.0,
+            width: (mediaQuery.size.width - padding * 3.0) / 2.0,
             decoration: BoxDecoration(
-              color: currentColor
+              color: currentColor,
+              border: Border.all(
+                color: Colors.black,
+                width: 1.0,
+              )
             ),
             child: Center(
               child: Text(widget.entry),
@@ -45,7 +52,7 @@ class FieldDropWidgetState extends State<FieldDropWidget> {
             currentColor = Colors.red;
         },
         onLeave: (value) => setState(() {
-          currentColor = Colors.grey;
+          currentColor = Colors.transparent;
         }),
       ),
     );
