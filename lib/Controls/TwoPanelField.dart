@@ -4,13 +4,9 @@ import '../Views/FieldDraggable.dart';
 import '../Views/FieldDropTarget.dart';
 
 class TwoPanelField extends StatefulWidget {
-  final String correctAnswer, wrongAnswer;
-
   const TwoPanelField(
   {
     Key key,
-    this.correctAnswer,
-    this.wrongAnswer
   }) : super(key: key);
 
   @override
@@ -21,11 +17,11 @@ class TwoPanelFieldState extends State<TwoPanelField> {
   MediaQueryData mediaData;
   double iconWidth = 100.0;
 
-  static final Color colorRed = Colors.redAccent;
-  static final Color colorGreen = Colors.greenAccent;
-  static final Color colorLerp = Color.lerp(colorGreen, colorRed, 0.15);
+  static final Color colorCorrect = Colors.greenAccent;
+  static final Color colorFoil = Colors.redAccent;
+  static final Color colorLerp = Color.lerp(colorCorrect, colorFoil, 0.15);
 
-  void onWidgetDropped(String output) {
+  void onWidgetDropped(bool output) {
     print("onWidgetDropped(): $output");
 
     showDialog(
@@ -34,7 +30,7 @@ class TwoPanelFieldState extends State<TwoPanelField> {
         return AlertDialog(
           title: Text("Response"),
           content: Text(
-            output == widget.correctAnswer ? "Correct Response" : "Incorrect Response"    
+            output ? "Correct Response" : "Incorrect Response"    
           ),
         );
       }
@@ -53,7 +49,6 @@ class TwoPanelFieldState extends State<TwoPanelField> {
       body: Stack(
         children: <Widget>[
           FieldDraggable(
-            content: widget.correctAnswer,
             initialColor: colorLerp,
             initialOffset: Offset(
               (mediaData.size.width / 2) -  (iconWidth / 2),
@@ -61,15 +56,15 @@ class TwoPanelFieldState extends State<TwoPanelField> {
             ),
           ),
           FieldDropWidget(
-            entry: widget.correctAnswer,
-            initialColor: colorGreen,
+            initialColor: colorCorrect,
             isLeftPortion: true,
+            isCorrect: true,
             callbackDropped: onWidgetDropped,
           ),
           FieldDropWidget(
-            entry: widget.wrongAnswer,
-            initialColor: colorRed,
+            initialColor: colorFoil,
             isLeftPortion: false,
+            isCorrect: false,
             callbackDropped: onWidgetDropped,
           ),
         ],

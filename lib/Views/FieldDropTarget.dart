@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
 class FieldDropWidget extends StatefulWidget {
-  final String entry;
   final bool isLeftPortion;
   final Function callbackDropped;
   final Color initialColor;
+  final bool isCorrect;
 
   final GlobalKey<FieldDropWidgetState> stateKey = GlobalKey<FieldDropWidgetState>();
 
   FieldDropWidget({
     Key key,
-    @required this.entry,
     @required this.isLeftPortion,
     @required this.callbackDropped,
     @required this.initialColor,
+    @required this.isCorrect,
   }) : super(key: key);
 
   @override
@@ -49,13 +49,13 @@ class FieldDropWidgetState extends State<FieldDropWidget> {
               )
             ),
             child: Center(
-              child: Text(widget.entry),
+              child: Text(""),
             ),
           );
         },
         onWillAccept: (value) => collectedData == null,
-        onAccept: (String data) {
-          widget.callbackDropped(widget.entry);
+        onAccept: (bool data) {
+          widget.callbackDropped(widget.isCorrect);
         },
         onLeave: (value) => setState(() {
           //currentColor = Colors.transparent;
