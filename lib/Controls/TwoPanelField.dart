@@ -1,12 +1,40 @@
+/* 
+    The MIT License
+
+    Copyright September 1, 2018 Shawn Gilroy/Louisiana State University
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
+*/
+
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 import '../Views/FieldDraggable.dart';
 import '../Views/FieldDropTarget.dart';
 
 class TwoPanelField extends StatefulWidget {
+  final double discriminabilityDifficulty;
+
   const TwoPanelField(
   {
     Key key,
+    @required this.discriminabilityDifficulty,
   }) : super(key: key);
 
   @override
@@ -17,14 +45,26 @@ class TwoPanelFieldState extends State<TwoPanelField> {
   MediaQueryData mediaData;
   double iconWidth = 100.0;
 
-  static final Color colorCorrect = Colors.greenAccent;
-  static final Color colorFoil = Colors.redAccent;
-  static final Color colorLerp = Color.lerp(colorCorrect, colorFoil, 0.15);
+  bool locationRandomizer = Random().nextInt(100) % 2 == 0;
 
-  void onWidgetDropped(bool output) {
-    print("onWidgetDropped(): $output");
+  static final List<Color> possibleColors = [
+    Colors.red, 
+    Colors.orange, 
+    Colors.yellow,
+    Colors.green, 
+    Colors.blue, 
+    Colors.indigo,
+    Colors.purple,
+    Colors.teal,
+    Colors.white, 
+    Colors.black];
 
-    showDialog(
+  Color colorCorrect = possibleColors[Random().nextInt(possibleColors.length - 1)];
+  Color colorFoil = possibleColors[Random().nextInt(possibleColors.length - 1)];
+  Color colorLerp;
+
+  void onWidgetDropped(bool output) async {
+    await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -35,10 +75,27 @@ class TwoPanelFieldState extends State<TwoPanelField> {
         );
       }
     );
+
+    colorCorrect = possibleColors[Random().nextInt(possibleColors.length)];
+    colorFoil = possibleColors[Random().nextInt(possibleColors.length)];
+
+    while (colorCorrect == colorFoil) {
+      colorFoil = possibleColors[Random().nextInt(possibleColors.length)];
+    }
+
+    locationRandomizer = Random().nextInt(100) % 2 == 0;
+
+    setState(() { });
   }
 
   @override
   Widget build(BuildContext context) {
+
+    while (colorCorrect == colorFoil) {
+      colorFoil = possibleColors[Random().nextInt(possibleColors.length)];
+    }
+
+    colorLerp = Color.lerp(colorCorrect, colorFoil, widget.discriminabilityDifficulty);
 
     if (mediaData == null) {
       mediaData = MediaQuery.of(context);
@@ -57,13 +114,13 @@ class TwoPanelFieldState extends State<TwoPanelField> {
           ),
           FieldDropWidget(
             initialColor: colorCorrect,
-            isLeftPortion: true,
+            isLeftPortion: locationRandomizer,
             isCorrect: true,
             callbackDropped: onWidgetDropped,
           ),
           FieldDropWidget(
             initialColor: colorFoil,
-            isLeftPortion: false,
+            isLeftPortion: !locationRandomizer,
             isCorrect: false,
             callbackDropped: onWidgetDropped,
           ),
