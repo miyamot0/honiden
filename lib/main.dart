@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'Controls/TwoPanelField.dart';
 
 void main() => runApp(new MyApp());
@@ -16,8 +15,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: TwoPanelField(
-        correctAnswer: "Stimulus 1",
-        wrongAnswer: "Stimulus 2",
+        correctAnswer: correctAnswer,
+        wrongAnswer: wrongAnswer,
       ),
     );
   }

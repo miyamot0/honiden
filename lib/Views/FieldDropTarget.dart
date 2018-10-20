@@ -3,22 +3,31 @@ import 'package:flutter/material.dart';
 class FieldDropWidget extends StatefulWidget {
   final String entry;
   final bool isLeftPortion;
+  final Function callbackDropped;
+  final Color initialColor;
 
-  const FieldDropWidget({
+  final GlobalKey<FieldDropWidgetState> stateKey = GlobalKey<FieldDropWidgetState>();
+
+  FieldDropWidget({
     Key key,
     @required this.entry,
     @required this.isLeftPortion,
+    @required this.callbackDropped,
+    @required this.initialColor,
   }) : super(key: key);
 
   @override
-  FieldDropWidgetState createState() => FieldDropWidgetState();
+  FieldDropWidgetState createState() => FieldDropWidgetState(key: stateKey);
 }
 
 class FieldDropWidgetState extends State<FieldDropWidget> {
   static const double padding = 10.0;
 
   String collectedData;
-  Color currentColor = Colors.transparent;
+
+  FieldDropWidgetState({
+    key
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +42,7 @@ class FieldDropWidgetState extends State<FieldDropWidget> {
             height: mediaQuery.size.height / 3.0,
             width: (mediaQuery.size.width - padding * 3.0) / 2.0,
             decoration: BoxDecoration(
-              color: currentColor,
+              color: widget.initialColor,
               border: Border.all(
                 color: Colors.black,
                 width: 1.0,
@@ -46,13 +55,18 @@ class FieldDropWidgetState extends State<FieldDropWidget> {
         },
         onWillAccept: (value) => collectedData == null,
         onAccept: (String data) {
-          if (data == widget.entry)
-            currentColor = Colors.green;
-          else
-            currentColor = Colors.red;
+          if (data == widget.entry) {
+            //currentColor = Colors.green;
+          }
+          else {
+            //currentColor = Colors.red;
+          }
+
+          widget.callbackDropped(data);
         },
         onLeave: (value) => setState(() {
-          currentColor = Colors.transparent;
+          //currentColor = Colors.transparent;
+          //widget.callbackDropped("onLeave()");
         }),
       ),
     );

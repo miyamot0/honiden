@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class FieldDraggable extends StatefulWidget {
   final Offset initialOffset;
   final String content;
+  final Color initialColor;
 
   const FieldDraggable(
   {
     Key key,
     this.initialOffset,
-    this.content
+    this.content,
+    this.initialColor,
   }) : super(key: key);
 
   @override
@@ -25,6 +27,7 @@ class FieldDraggableState extends State<FieldDraggable> {
     decoration: TextDecoration.none,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.normal,
+    fontFamily: "serif",
     fontSize: 20.0);
 
   FieldDraggableState(this.content);
@@ -47,7 +50,7 @@ class FieldDraggableState extends State<FieldDraggable> {
         child: Container(
           width: 200.0,
           height: 200.0,
-          color: Colors.blue,
+          color: widget.initialColor,
           child: Center(
             child: Text(
               widget.content,
@@ -58,7 +61,7 @@ class FieldDraggableState extends State<FieldDraggable> {
         feedback: Container(
           width: 200.0,
           height: 200.0,
-          color: Colors.blue,
+          color: widget.initialColor,
           child: Center(
             child: Text(
               widget.content,
