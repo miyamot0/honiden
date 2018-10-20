@@ -12,7 +12,7 @@
 
     The above copyright notice and this permission notice shall be included in
     all copies or substantial portions of the Software.
-    
+
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,19 +23,20 @@
 */
 
 import 'package:flutter/material.dart';
-import 'Pages/HomePage.dart';
 
-void main() => runApp(new MyApp());
+import '../Controls/TwoPanelField.dart';
 
-class MyApp extends StatelessWidget {
+class TrialPage extends StatelessWidget {
+  final double difficultyLevel;
+
+  TrialPage(this.difficultyLevel);
+
   @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
+  Widget build (BuildContext ctxt) {
+    return new Scaffold(
+      body: TwoPanelField(
+        discriminabilityDifficulty: difficultyLevel / 2.0,
       ),
-      home: HomePage(),
     );
   }
 }

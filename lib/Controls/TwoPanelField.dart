@@ -12,7 +12,7 @@
 
     The above copyright notice and this permission notice shall be included in
     all copies or substantial portions of the Software.
-    
+
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -44,6 +44,7 @@ class TwoPanelField extends StatefulWidget {
 class TwoPanelFieldState extends State<TwoPanelField> {
   MediaQueryData mediaData;
   double iconWidth = 100.0;
+  int trialsCompleted = 0;
 
   bool locationRandomizer = Random().nextInt(100) % 2 == 0;
 
@@ -64,6 +65,8 @@ class TwoPanelFieldState extends State<TwoPanelField> {
   Color colorLerp;
 
   void onWidgetDropped(bool output) async {
+    trialsCompleted = trialsCompleted + 1;
+
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -75,6 +78,10 @@ class TwoPanelFieldState extends State<TwoPanelField> {
         );
       }
     );
+
+    if (trialsCompleted >= 3) {
+      Navigator.pop(context);
+    }
 
     colorCorrect = possibleColors[Random().nextInt(possibleColors.length)];
     colorFoil = possibleColors[Random().nextInt(possibleColors.length)];
