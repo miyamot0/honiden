@@ -55,14 +55,7 @@ class FieldDropWidgetState extends State<FieldDropWidget> {
         },
         onWillAccept: (value) => collectedData == null,
         onAccept: (String data) {
-          if (data == widget.entry) {
-            //currentColor = Colors.green;
-          }
-          else {
-            //currentColor = Colors.red;
-          }
-
-          widget.callbackDropped(data);
+          widget.callbackDropped(widget.entry);
         },
         onLeave: (value) => setState(() {
           //currentColor = Colors.transparent;
