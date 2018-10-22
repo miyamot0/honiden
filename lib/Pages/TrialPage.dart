@@ -24,7 +24,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../Controls/TwoPanelField.dart';
+import '../Controls/TwoPanelSelectField.dart';
 
 class TrialPage extends StatelessWidget {
   final double difficultyLevel;
@@ -34,7 +34,7 @@ class TrialPage extends StatelessWidget {
   @override
   Widget build (BuildContext ctxt) {
     return new Scaffold(
-      body: TwoPanelField(
+      body: TwoPanelSelectField(
         discriminabilityDifficulty: difficultyLevel / 2.0,
       ),
     );
