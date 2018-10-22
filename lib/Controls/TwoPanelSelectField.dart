@@ -42,7 +42,7 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
   MediaQueryData mediaData;
   double iconWidth = 100.0;
   int trialsCompleted = 0;
-  static const double padding = 10.0;
+  static const double padding = 50.0;
 
   bool locationRandomizer = Random().nextInt(100) % 2 == 0;
 
@@ -161,10 +161,10 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
                 onSelected(true);
               },
             ),
-            left: locationRandomizer ? padding : (mediaData.size.width / 2.0) + padding / 2.0,
+            left: locationRandomizer ? padding : (mediaData.size.width) - padding - iconWidth,
             bottom: padding,
-            width: mediaData.size.width / 2.0 - padding * 2.0,
-            height: mediaData.size.width / 4.0,
+            width: iconWidth,
+            height: iconWidth,
           ),
           Positioned(
             child: GestureDetector(
@@ -183,10 +183,10 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
                 onSelected(false);
               },
             ),
-            left: !locationRandomizer ? padding : (mediaData.size.width / 2.0) + padding / 2.0,
+            left: !locationRandomizer ? padding : (mediaData.size.width) - padding - iconWidth,
             bottom: padding,
-            width: mediaData.size.width / 2.0 - padding * 2.0,
-            height: mediaData.size.width / 4.0,
+            width: iconWidth,
+            height: iconWidth,
           )
         ],
       ),
