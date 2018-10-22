@@ -48,17 +48,7 @@ class TwoPanelFieldState extends State<TwoPanelField> {
 
   bool locationRandomizer = Random().nextInt(100) % 2 == 0;
 
-  static final List<Color> possibleColors = [
-    Colors.red, 
-    Colors.orange, 
-    Colors.yellow,
-    Colors.green, 
-    Colors.blue, 
-    Colors.indigo,
-    Colors.purple,
-    Colors.teal,
-    Colors.white, 
-    Colors.black];
+  static final List<Color> possibleColors = [Colors.white, Colors.black];
 
   Color colorCorrect = possibleColors[Random().nextInt(possibleColors.length - 1)];
   Color colorFoil = possibleColors[Random().nextInt(possibleColors.length - 1)];
