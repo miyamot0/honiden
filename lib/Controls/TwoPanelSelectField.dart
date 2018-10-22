@@ -54,6 +54,8 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
 
   AnimationController animController;
 
+  double opacitySelection = 0.0;
+
   void onSelected(bool output) async {
     trialsCompleted = trialsCompleted + 1;
 
@@ -104,6 +106,12 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
       if (status == AnimationStatus.completed) {
         animController.reverse();
       }
+      else if (status == AnimationStatus.dismissed) {
+        opacitySelection = 1.0;
+      }
+      else if (status == AnimationStatus.forward) {
+        opacitySelection = 0.0;
+      }
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_)  => animController.forward());
@@ -146,14 +154,17 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
           ),
           Positioned(
             child: GestureDetector(
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 1.0,
+              child: Opacity(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1.0,
+                    ),
+                    color: colorCorrect,
                   ),
-                  color: colorCorrect,
                 ),
+                opacity: opacitySelection,
               ),
               onTap: () {
                 if (animController.isAnimating) return;
@@ -168,14 +179,17 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
           ),
           Positioned(
             child: GestureDetector(
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 1.0,
+              child: Opacity(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1.0,
+                    ),
+                    color: colorFoil,
                   ),
-                  color: colorFoil,
                 ),
+                opacity: opacitySelection,
               ),
               onTap: () {
                 if (animController.isAnimating) return;
