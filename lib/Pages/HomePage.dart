@@ -26,7 +26,15 @@ import 'package:flutter/material.dart';
 
 import '../Pages/TrialPage.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+
+  @override
+  HomePageState createState() => HomePageState();
+}
+
+class HomePageState extends State<HomePage> {
+  double difficultyValue = 1.0;
+
   @override
   Widget build (BuildContext ctxt) {
     return new Scaffold(
@@ -40,56 +48,28 @@ class HomePage extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            Slider(
+              value: difficultyValue,
+              min: 0.0,
+              max: 50.0,              
+              divisions: 50,
+              label: '$difficultyValue',
+              onChanged: (double value) {
+                setState(() {
+                  difficultyValue = num.parse(value.toStringAsFixed(2));
+                });
+              },
+            ),
             MaterialButton(
-              child: Text("Easy (10% Similarity)"),
+              child: Text("Run Trials at $difficultyValue % Similarity"),
               color: Colors.lightBlue,
               onPressed: () {
                 Navigator.push(
                   ctxt,
-                  new MaterialPageRoute(builder: (ctxt) => TrialPage(0.2)),
+                  new MaterialPageRoute(builder: (ctxt) => TrialPage(difficultyValue / 100)),
                 );
               }
             ),
-            MaterialButton(
-              child: Text("Mild (20% Similarity)"),
-              color: Colors.lightBlue,
-              onPressed: () {
-                Navigator.push(
-                  ctxt,
-                  new MaterialPageRoute(builder: (ctxt) => TrialPage(0.4)),
-                );
-              }
-            ),
-            MaterialButton(
-              child: Text("Moderate (30% Similarity)"),
-              color: Colors.lightBlue,
-              onPressed: () {
-                Navigator.push(
-                  ctxt,
-                  new MaterialPageRoute(builder: (ctxt) => TrialPage(0.6)),
-                );
-              }
-            ),
-            MaterialButton(
-              child: Text("High (40% Similarity)"),
-              color: Colors.lightBlue,
-              onPressed: () {
-                Navigator.push(
-                  ctxt,
-                  new MaterialPageRoute(builder: (ctxt) => TrialPage(0.8)),
-                );
-              }
-            ),
-            MaterialButton(
-              child: Text("Impossible (50% Similarity)"),
-              color: Colors.lightBlue,
-              onPressed: () {
-                Navigator.push(
-                  ctxt,
-                  new MaterialPageRoute(builder: (ctxt) => TrialPage(1.0)),
-                );
-              }
-            )
           ]
         ),
       )
