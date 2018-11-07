@@ -27,11 +27,13 @@ import 'dart:math';
 
 class TwoPanelSelectField extends StatefulWidget {
   final double discriminabilityDifficulty;
+  final int trialNumber;
 
   const TwoPanelSelectField(
   {
     Key key,
     @required this.discriminabilityDifficulty,
+    @required this.trialNumber,
   }) : super(key: key);
 
   @override
@@ -71,7 +73,7 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
       }
     );
 
-    if (trialsCompleted >= 3) {
+    if (trialsCompleted >= widget.trialNumber) {
       Navigator.pop(context);
     }
 

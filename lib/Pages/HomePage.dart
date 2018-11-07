@@ -34,6 +34,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   double difficultyValue = 1.0;
+  double trialCount = 3.0;
 
   @override
   Widget build (BuildContext ctxt) {
@@ -42,35 +43,77 @@ class HomePageState extends State<HomePage> {
         title: new Text("Discrimination Trial Task"),
       ),
       body: Align(
-        alignment: Alignment.center,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Slider(
-              value: difficultyValue,
-              min: 0.0,
-              max: 50.0,              
-              divisions: 50,
-              label: '$difficultyValue',
-              onChanged: (double value) {
-                setState(() {
-                  difficultyValue = num.parse(value.toStringAsFixed(2));
-                });
-              },
-            ),
-            MaterialButton(
-              child: Text("Run Trials at $difficultyValue % Similarity"),
-              color: Colors.lightBlue,
-              onPressed: () {
-                Navigator.push(
-                  ctxt,
-                  new MaterialPageRoute(builder: (ctxt) => TrialPage(difficultyValue / 100)),
-                );
-              }
-            ),
-          ]
+        alignment: Alignment.center,        
+        child: Padding(
+          padding: EdgeInsets.only(
+            bottom: 10.0,
+            left: 100.0,
+            right: 100.0,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: 50.0,
+                ),
+                child: Text(
+                  "To begin the visual discrimination task, select the number of trials desired and the level of difficulty. The levels of difficulty represent the distance from equal difference between each of the stimuli (i.e., equal similarity)"
+                ),
+              ),
+              Text(
+                "Select Number of Trials"
+              ),
+              Slider(
+                value: trialCount,
+                min: 1.0,
+                max: 10.0,              
+                divisions: 9,
+                label: 'Run $trialCount Trials',
+                onChanged: (double value) {
+                  setState(() {
+                    trialCount = num.parse(value.toStringAsFixed(2));
+                  });
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 10.0,
+                ),
+                child: Text(
+                  "Select Level of Difficulty"
+                ),
+              ),
+              Slider(
+                value: difficultyValue,
+                min: 0.0,
+                max: 50.0,              
+                divisions: 50,
+                label: '$difficultyValue % Similarity',
+                onChanged: (double value) {
+                  setState(() {
+                    difficultyValue = num.parse(value.toStringAsFixed(2));
+                  });
+                },
+              ),
+              MaterialButton(
+                child: Text("Run ${trialCount.round()} Trials at $difficultyValue % Similarity"),
+                color: Colors.lightBlue,
+                onPressed: () {
+                  Navigator.push(
+                    ctxt,
+                    new MaterialPageRoute(builder: (ctxt) => TrialPage(
+                      difficultyValue / 200.0,
+                      trialCount.round(),
+                      )
+                    ),
+                  );
+                }
+              ),
+            ]
+          ),
         ),
       )
     );

@@ -28,14 +28,16 @@ import '../Controls/TwoPanelSelectField.dart';
 
 class TrialPage extends StatelessWidget {
   final double difficultyLevel;
+  final int trialCount;
 
-  TrialPage(this.difficultyLevel);
+  TrialPage(this.difficultyLevel, this.trialCount);
 
   @override
   Widget build (BuildContext ctxt) {
     return new Scaffold(
       body: TwoPanelSelectField(
-        discriminabilityDifficulty: difficultyLevel / 2.0,
+        discriminabilityDifficulty: difficultyLevel,
+        trialNumber: trialCount,
       ),
     );
   }
