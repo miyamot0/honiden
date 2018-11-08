@@ -79,18 +79,18 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
 
     if (trialsCompleted >= widget.trialNumber) {
       Navigator.pop(context);
-    }
-
-    colorCorrect = possibleColors[Random().nextInt(possibleColors.length)];
-    colorFoil = possibleColors[Random().nextInt(possibleColors.length)];
-
-    while (colorCorrect == colorFoil) {
+    } else {
+      colorCorrect = possibleColors[Random().nextInt(possibleColors.length)];
       colorFoil = possibleColors[Random().nextInt(possibleColors.length)];
+
+      while (colorCorrect == colorFoil) {
+        colorFoil = possibleColors[Random().nextInt(possibleColors.length)];
+      }
+
+      locationRandomizer = Random().nextInt(100) % 2 == 0;
+
+      animController.forward(from: 0.0);
     }
-
-    locationRandomizer = Random().nextInt(100) % 2 == 0;
-
-    animController.forward(from: 0.0);
   }
 
   @override
@@ -123,6 +123,14 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_)  => animController.forward(from: 0.99999999));
+  }
+
+  @override
+  void dispose() {
+    animController.stop(canceled: true);
+    animController.dispose();
+
+    super.dispose();
   }
 
   @override
