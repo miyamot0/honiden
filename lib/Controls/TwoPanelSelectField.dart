@@ -44,6 +44,9 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
   MediaQueryData mediaData;
   double iconWidth = 100.0;
   int trialsCompleted = 0;
+
+  int millisecondDelay = 1000;
+
   static const double padding = 50.0;
 
   bool locationRandomizer = Random().nextInt(100) % 2 == 0;
@@ -56,6 +59,7 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
 
   AnimationController animController;
 
+  double opacityReferent = 1.0;
   double opacitySelection = 0.0;
 
   void onSelected(bool output) async {
@@ -97,8 +101,8 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
     animController = new AnimationController(
       lowerBound: 0.0,
       upperBound: 1.0,
-      duration: new Duration(milliseconds: 500),
-      vsync: this
+      duration: new Duration(milliseconds: millisecondDelay),
+      vsync: this,
     )
     ..addListener(() 
     {
@@ -106,17 +110,19 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
     })
     ..addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        animController.reverse();
+        animController.reverse();        
       }
       else if (status == AnimationStatus.dismissed) {
         opacitySelection = 1.0;
+        opacityReferent = 0.0;
       }
       else if (status == AnimationStatus.forward) {
         opacitySelection = 0.0;
+        opacityReferent = 1.0;
       }
     });
 
-    WidgetsBinding.instance.addPostFrameCallback((_)  => animController.forward());
+    WidgetsBinding.instance.addPostFrameCallback((_)  => animController.forward(from: 0.99999999));
   }
 
   @override
@@ -147,7 +153,7 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
                   color: colorLerp,
                 ),
               ),
-              opacity: animController.value,
+              opacity: opacityReferent,
             ),
             left: (mediaData.size.width / 2) - (iconWidth / 2),
             top:  (mediaData.size.height / 4) - (iconWidth / 2),
