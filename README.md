@@ -12,9 +12,8 @@ This project is a Flutter-powered application designed to gauge a learner's abil
 - Expand on Title screen
 
 ### Images
-![Alt text](previews/Easy_Discrimination.gif?raw=true "Drag Icons")
-![Alt text](previews/Mild_Discrimination.gif?raw=true "Drag Icons")
-![Alt text](previews/Difficult_Discrimination.gif?raw=true "Drag Icons")
+![Alt text](previews/Discrimination_Trials.gif?raw=true "Drag Icons")
+![Alt text](previews/Session_Creation.gif?raw=true "Drag Icons")
 
 ## Derivative Works
 
