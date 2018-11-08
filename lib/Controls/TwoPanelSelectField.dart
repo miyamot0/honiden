@@ -44,7 +44,7 @@ class TwoPanelSelectField extends StatefulWidget {
 
 class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTickerProviderStateMixin {
   MediaQueryData mediaData;
-  int trialsCompleted = 0;
+  int currentTrial = 1;
 
   static const double padding = 50.0;
   static double iconWidth = 100.0;
@@ -63,7 +63,7 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
   double opacitySelection = 0.0;
 
   void onSelected(bool output) async {
-    trialsCompleted = trialsCompleted + 1;
+    currentTrial = currentTrial + 1;
 
     await showDialog(
       context: context,
@@ -77,7 +77,7 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
       }
     );
 
-    if (trialsCompleted >= widget.trialNumber) {
+    if (currentTrial > widget.trialNumber) {
       Navigator.pop(context);
     } else {
       colorCorrect = possibleColors[Random().nextInt(possibleColors.length)];
@@ -150,6 +150,11 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
     return Scaffold(
       body: Stack(
         children: <Widget>[
+          Positioned(
+            child: Text("Trial #$currentTrial of ${widget.trialNumber}"),
+            left: padding,
+            top: padding,
+          ),
           Positioned(
             child: Opacity(
               child: Container(              
