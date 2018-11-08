@@ -35,6 +35,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   double difficultyValue = 1.0;
   double trialCount = 3.0;
+  double displaySeconds = 0.5;
 
   @override
   Widget build (BuildContext ctxt) {
@@ -98,8 +99,28 @@ class HomePageState extends State<HomePage> {
                   });
                 },
               ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 10.0,
+                ),
+                child: Text(
+                  "Select Display Times"
+                ),
+              ),
+              Slider(
+                value: displaySeconds,
+                min: 0.5,
+                max: 10.0,              
+                divisions: 95,
+                label: 'Sample stimuli presented for $displaySeconds seconds',
+                onChanged: (double value) {
+                  setState(() {
+                    displaySeconds = num.parse(value.toStringAsFixed(2));
+                  });
+                },
+              ),
               MaterialButton(
-                child: Text("Run ${trialCount.round()} Trials at $difficultyValue % Similarity"),
+                child: Text("Present ${trialCount.round()} Trials ($difficultyValue% Similarity, $displaySeconds second presentation)"),
                 color: Colors.lightBlue,
                 onPressed: () {
                   Navigator.push(
@@ -107,6 +128,7 @@ class HomePageState extends State<HomePage> {
                     new MaterialPageRoute(builder: (ctxt) => TrialPage(
                       difficultyValue / 200.0,
                       trialCount.round(),
+                      displaySeconds
                       )
                     ),
                   );

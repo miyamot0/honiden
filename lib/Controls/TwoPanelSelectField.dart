@@ -28,12 +28,14 @@ import 'dart:math';
 class TwoPanelSelectField extends StatefulWidget {
   final double discriminabilityDifficulty;
   final int trialNumber;
+  final double presentationLength;
 
   const TwoPanelSelectField(
   {
     Key key,
     @required this.discriminabilityDifficulty,
     @required this.trialNumber,
+    @required this.presentationLength,
   }) : super(key: key);
 
   @override
@@ -44,8 +46,6 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
   MediaQueryData mediaData;
   double iconWidth = 100.0;
   int trialsCompleted = 0;
-
-  int millisecondDelay = 1000;
 
   static const double padding = 50.0;
 
@@ -101,7 +101,7 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
     animController = new AnimationController(
       lowerBound: 0.0,
       upperBound: 1.0,
-      duration: new Duration(milliseconds: millisecondDelay),
+      duration: new Duration(milliseconds: (widget.presentationLength * 1000).toInt()),
       vsync: this,
     )
     ..addListener(() 
