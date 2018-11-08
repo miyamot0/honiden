@@ -44,10 +44,10 @@ class TwoPanelSelectField extends StatefulWidget {
 
 class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTickerProviderStateMixin {
   MediaQueryData mediaData;
-  double iconWidth = 100.0;
   int trialsCompleted = 0;
 
   static const double padding = 50.0;
+  static double iconWidth = 100.0;
 
   bool locationRandomizer = Random().nextInt(100) % 2 == 0;
 
@@ -122,7 +122,7 @@ class TwoPanelSelectFieldState extends State<TwoPanelSelectField> with SingleTic
       }
     });
 
-    WidgetsBinding.instance.addPostFrameCallback((_)  => animController.forward(from: 0.99999999));
+    WidgetsBinding.instance.addPostFrameCallback((_)  => animController.forward());
   }
 
   @override
